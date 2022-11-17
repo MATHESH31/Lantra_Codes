@@ -12,4 +12,8 @@ except:
     print("Connection Error!!")
 print("Database Ping : ",time.time() - start)
 
+mydb = myclient["Entertainment"]
+
+mycol = mydb["movies"]
+
 myclient.close()
