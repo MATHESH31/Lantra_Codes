@@ -1,0 +1,19 @@
+select firstname from passengers order by firstname desc;
+
+select bus_name,travel_from,travel_to from busses where "travel_to" = 'Chennai';
+
+select firstname,lastname,age from passengers where age>25;
+
+select bus_name,bus_fare from busses WHERE bus_fare = 1900;
+
+select count(pass_id) from booked_tickets where pass_id = 3;
+
+select bus_name from busses where %A;
+
+create column(address text not null) on table passengers;
+
+select firstname,bus_name,travel_from,travel_to,booked_date,bus_fare from passengers inner join booked_tickets on booked_tickets.pass_id = passengers.pass_id inner join busses on booked_tickets.bus_id = busses.bus_id;
+
+truncate firstname,lastname,age,email,ph_number from passengers where age>25;
+
+truncate table passengers;

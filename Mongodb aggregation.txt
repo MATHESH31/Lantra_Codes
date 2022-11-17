@@ -1,0 +1,36 @@
+[
+    {
+        '$project': {
+            '_id': 0, 
+            'name': 1, 
+            'orders': 1
+        }
+    }, {
+        '$unwind': {
+            'path': '$orders'
+        }
+    }, {
+        '$match': {
+            'orders.orderDate': {
+                '$gte': datetime(2021, 12, 31, 18, 30, 0, tzinfo=timezone.utc), 
+                '$lte': datetime(2022, 12, 31, 18, 29, 59, tzinfo=timezone.utc)
+            }
+        }
+    }, {
+        '$unwind': {
+            'path': '$orders.dishes'
+        }
+    }, {
+        '$project': {
+            'name': 1, 
+            'orders.dishes': 1
+        }
+    }, {
+        '$group': {
+            '_id': '$name', 
+            'itemCount': {
+                '$sum': 1
+            }
+        }
+    }, {}
+]

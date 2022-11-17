@@ -1,0 +1,11 @@
+a = input("Enter the string: ").split("")
+l = []
+dup_l = []
+dup_count = 0
+if(len(a)>0):
+    for i in a:
+        if(i not in l):
+            l.append(i)
+        else:
+             dup_l.append(i)
+    print(len(dup_l)*2)   

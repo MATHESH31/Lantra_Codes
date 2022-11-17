@@ -1,0 +1,12 @@
+n = int(input("Enter the number: "))
+li = []
+a = 0
+for i in range(1,n):
+    if(n%i == 0):
+        li.append(i)
+for i in li:
+    a +=i
+if(n == a):
+    print("Output = True")
+else:
+    print("Output = False")

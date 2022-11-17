@@ -1,0 +1,12 @@
+input = [1,2,2,3,4,5,7,8,6,5]
+count = 0
+fin_count = 0
+for i in range(len(input)):
+    try:
+        if(input[i]<input[i+1]):
+            count +=1
+            fin_count = count
+        elif(input[i]>=input[i+1]):
+            count = 0
+    except IndexError:
+        print(fin_count)

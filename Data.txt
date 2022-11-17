@@ -1,0 +1,25 @@
+('Eraiyarul','kathirvel',25,'lovelyarul@gmail.com','8925451461'),
+('Gokulakrishnan','Rajan',26,'Rkg@gmail.com','7708635545'),
+('Guru Prasath','Annadurai',30,'guruprasathsan@gmail.com','8825953425'),
+('Jagathesh','Krishnamoorty',24,'jagatheshkkjagathesh@gmail.com','9694680156'),
+('Mathesh','Nagendran',28,'mathezh1@gmail.com','9600524983'),
+('Nandhini','Sivakumar',20,'nandhini@gmail.com','9943823467'),
+('Rohith','Selvaraj',27,'rohichristl@gmail.com','9566397759'),
+('Phoenix','Ponnusamy',45,'phoenix@gmail.com','9685734219'),
+('balavivekanandhan','Vishnuvarathan',15,'balavk@gmail.com','8925451461');
+
+
+
+('KPN Travels','Coimbatore','Chennai',1500),
+('RAT Travels','Trichy','Madurai',1700),
+('SSP Travels','Thirunelveli','Thanjavur',1200),
+('TPDE Travels','Dindugul','kanyakumari',1650),
+('AICS Travels','Theni','Karaikal',1000),
+('MM Travels','Ooty','Thenkasi',1900);
+
+
+
+('03.01.2023',3,2,'Yet travel'),
+('17.05.2023',5,1,'Travelling'),
+('25.03.2023',7,4,'Yet travel'),
+('12.08.2023',4,3,'Travelling');

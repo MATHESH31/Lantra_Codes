@@ -1,0 +1,14 @@
+rows = int(input("Enter the number of rows :"))
+columns = int(input("Enter the number of columns :"))
+
+a = 1
+temp = []
+final_matrix = []
+
+for i in range(rows):
+    temp.clear()
+    for j in range(columns):
+        temp.append(a)
+        a +=1
+    final_matrix.append(temp)
+print(final_matrix)

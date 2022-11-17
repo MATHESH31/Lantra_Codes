@@ -1,0 +1,148 @@
+import psycopg2
+
+conn = psycopg2.connect(
+    database = "py_pg",
+    user = "postgres",
+    password = "123456"
+)
+
+print("Database is connected")
+
+cursor = conn.cursor()
+
+#FUNCTION SELECTION
+func = input("Enter the function to perform (CREATE/INSERT/UPDATE/DELETE/SELECT/EXIT): ").upper()
+
+while(True):
+    if(func == "CREATE"):
+
+        #IF ALREADY EXIST
+        cursor.execute("""DROP TABLE employees;""")
+
+        #CREATE TABLE
+        create = """CREATE TABLE employees(employeeNumber SERIAL PRIMARY KEY,firstname VARCHAR(15),lastname VARCHAR(15),email VARCHAR(255),pincode VARCHAR(6),officeCode VARCHAR(4),reportsTo VARCHAR(20),jobTitle VARCHAR(15));"""
+        cursor.execute(create)
+        conn.commit()
+        print("Table employees created")
+        break
+
+    elif(func == "INSERT"):
+
+        #INSERT DATA
+        n = int(input("Enter number of Employees to input: "))
+        for i in range(n):
+            firstname = input("Enter your firstname: ")
+            lastname = input("Enter your lastname: ")
+            email = input("Enter your email: ")
+            pincode = int(input("Enter your pincode: "))
+            officeCode = int(input("Enter your Office Code: "))
+            reportsTo = input("Enter whom are you reporting to: ")
+            jobTitle = input("Enter your Job Title: ")
+            cursor.execute("""INSERT INTO employees(firstname,lastname,email,pincode,officeCode,reportsTo,jobTitle) VALUES (%s,%s,%s,%s,%s,%s,%s)""",[firstname,lastname,email,pincode,officeCode,reportsTo,jobTitle])
+        print("Values inserted")
+        conn.commit()
+        print(cursor.fetchall())
+        break
+
+    elif(func == "UPDATE"):
+
+        #UPDATE DATA
+        u_field = input("Enter field to update: ")
+        k_field = input("Enter key field to update: ")
+        oper = input("Enter operator to perform (EQUAL/GREATERTHAN/LESSERTHAN/GREATERTHANEQUAL/LESSERTHANEQUAL/NOTEQUAL)").upper()
+        n_s = input("Is the value for key NUMERAL or STRING: ").upper()
+        val = input("Enter value for key to update: ")
+
+        if(n_s == "NUMERAL"):
+            if(oper == "EQUAL"):
+                cursor.execute("""UPDATE %s FROM employees where %s = %s ;""",[u_field,k_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "GREATERTHAN"):
+                cursor.execute("""UPDATE %s FROM employees where %s > %s ;""",[u_field,k_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "LESSERTHAN"):
+                cursor.execute("""UPDATE %s FROM employees where %s < %s ;""",[u_field,k_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "GREATERTHANEQUAL"):
+                cursor.execute("""UPDATE %s FROM employees where %s >= %s ;""",[u_field,k_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "LESSERTHANEQUAL"):
+                cursor.execute("""UPDATE %s FROM employees where %s <= %s ;""",[u_field,k_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "NOTEQUAL"):
+                cursor.execute("""UPDATE %s FROM employees where %s != %s ;""",[u_field,k_field,int(val)])
+                print(cursor.fetchall())
+        
+        elif(n_s == "STRING"):
+            if(oper == "EQUAL"):
+                cursor.execute("""UPDATE %s FROM employees where %s = %s ;""",[u_field,k_field,val])
+                print(cursor.fetchall())
+
+            elif(oper == "NOTEQUAL"):
+                cursor.execute("""UPDATE %s FROM employees where %s != %s ;""",[u_field,k_field,val])
+                print(cursor.fetchall())
+        conn.commit()
+        break
+
+    elif( func == "DELETE"):
+
+        #DELETE DATA
+        del_field = input("Enter field to delete: ")
+        u_field = input("Enter key field to delete: ")
+        oper = input("Enter operator to perform (EQUAL/GREATERTHAN/LESSERTHAN/GREATERTHANEQUAL/LESSERTHANEQUAL/NOTEQUAL)").upper()
+        n_s = input("Is the value for key NUMERAL or STRING: ").upper()
+        val = input("Enter value for key to delete: ")
+
+        if(n_s == "NUMERAL"):
+            if(oper == "EQUAL"):
+                cursor.execute("""DROP COLUMN %s where %s = %s""",[del_field,u_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "GREATERTHAN"):
+                cursor.execute("""DROP COLUMN %s where %s = %s""",[del_field,u_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "LESSERTHAN"):
+                cursor.execute("""DROP COLUMN %s where %s = %s""",[del_field,u_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "GREATERTHANEQUAL"):
+                cursor.execute("""DROP COLUMN %s where %s = %s""",[del_field,u_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "LESSERTHANEQUAL"):
+                cursor.execute("""DROP COLUMN %s where %s = %s""",[del_field,u_field,int(val)])
+                print(cursor.fetchall())
+
+            elif(oper == "NOTEQUAL"):
+                cursor.execute("""DROP COLUMN %s where %s = %s""",[del_field,u_field,int(val)])
+                print(cursor.fetchall())
+        
+        elif(n_s == "STRING"):
+            if(oper == "EQUAL"):
+                cursor.execute("""DROP COLUMN %s where %s = %s""",[del_field,u_field,val])
+                print(cursor.fetchall())
+
+            elif(oper == "NOTEQUAL"):
+                cursor.execute("""DROP COLUMN %s where %s = %s""",[del_field,u_field,val])
+                print(cursor.fetchall())
+        conn.commit()
+        break
+
+    elif(func == "SELECT"):
+        print(cursor.execute("""SELECT %s,%s,%s,%s,%s,%s,%s,%s FROM employees""",["employeeNumber","firstname","lastname","email","pincode","officeCode","reportsTo","jobTitle"]))
+        break
+
+    elif(func == "EXIT"):
+        break
+
+    else:
+        print("Enter valid command!!")
+
+cursor.close()
+conn.close()

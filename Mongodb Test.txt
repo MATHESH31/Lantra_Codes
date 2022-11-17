@@ -1,0 +1,44 @@
+db.getCollection("comments").aggregate(
+
+    // Pipeline
+    [
+        // Stage 1
+        {
+            $project: {
+                name:1,
+                text:1
+                
+            }
+        },
+
+        // Stage 2
+        {
+            $group: {
+                _id: "$name",
+                Count: { $sum : 1}
+                
+            }
+        },
+
+        // Stage 3
+        {
+            $sort: {
+                Count: -1
+                
+            }
+        },
+
+        // Stage 4
+        {
+            $limit: 10
+        }
+    ],
+
+    // Options
+    {
+
+    }
+
+    // Created with Studio 3T, the IDE for MongoDB - https://studio3t.com/
+
+);

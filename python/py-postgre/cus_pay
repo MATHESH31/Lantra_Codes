@@ -1,0 +1,104 @@
+import psycopg2
+
+flag = False
+
+try:
+    conn = psycopg2.connect(
+        database = "py_pg",
+        user = "postgres",
+        password = "123456"
+    )
+    flag = True
+    print("Database is connected.")
+except:
+    print("Database is not connected!!")
+
+if(flag == False):
+    pass
+else:
+    cursor = conn.cursor()
+
+print("1 - CREATE CUSTOMERS")
+print("2 - CREATE PAYMENTS")
+print("3 - INSERT CUSTOMERS")
+print("4 - INSERT PAYMENTS")
+print("5 - VIEW PAYMENTS")
+print("6 - DELETE CUSTOMERS")
+print("7 - DELETE PAYMENTS")
+print("8 - EXIT")
+
+while(True):
+    a = int(input("Enter operation to perform : ").upper())
+
+    if(a == 1):
+        #CREATE CUSTOMERS
+        create_customers = """CREATE TABLE customers(cus_id varchar(4) UNIQUE,cus_name varchar(20),cus_address varchar(30),cus_email varchar(255));"""
+        cursor.execute(create_customers)
+        conn.commit()
+        print("customer table created")
+        
+    elif(a == 2):
+        #CREATE PAYMENTS
+        create_payments = """CREATE TABLE payments(pay_id SERIAL,cus_id varchar(4),product varchar(20),price float,total float);"""
+        cursor.execute(create_payments)
+        conn.commit()     
+        print("payments table created")
+
+    elif(a == 3):
+        #INSERT CUSTOMERS
+        cus_entry = int(input("number of entries"))
+
+        for i in range(cus_entry):
+            cus_id1 = input("Enter id of customer : ")
+            cus_name = input("Enter name of customer : ")
+            cus_address = input("Enter address of customer : ")
+            cus_email = input("Enter email of customer : ")
+            cursor.execute("""INSERT INTO customers(cus_id,cus_name,cus_address,cus_email) VALUES (%s,%s,%s,%s);""",[cus_id1,cus_name,cus_address,cus_email])
+
+        conn.commit()
+        cursor.execute("SELECT * FROM customers;")
+        print(cursor.fetchall())
+
+    elif(a == 4):
+        #INSERT PAYMENTS
+        pay_entry = int(input("number of entries"))
+
+        for i in range(pay_entry):
+            cus_id2 = input("Enter id of customer : ")
+            product_name = input("Enter name of product : ")
+            price = float(input("Enter price of product : "))
+            total = float(input("Enter total price : "))
+            cursor.execute("""INSERT INTO payments(cus_id,product,price,total) VALUES (%s,%s,%s,%s);""",[cus_id2,product_name,price,total])
+
+        conn.commit()
+        cursor.execute("SELECT * FROM payments;")
+        print(cursor.fetchall())
+
+    elif(a == 5):
+        #VIEWING PAYMENT
+        cursor.execute("SELECT pay_id,cus_name,product,price,total FROM payments INNER JOIN customers ON payments.cus_id = customers.cus_id")
+        conn.commit()
+        print(cursor.fetchall())
+
+    elif(a == 6):
+        #DELETING RECORD
+        del_id1 = input("Enter customer id to delete the record : ")
+        cursor.execute("DELETE FROM payments WHERE cus_id = %s",[del_id1,])
+        conn.commit()
+        cursor.execute("SELECT * FROM customers;")
+        print(cursor.fetchall())
+    
+    elif(a == 7):
+        #DELETING RECORD
+        del_id2 = input("Enter customer id to delete the record : ")
+        cursor.execute("DELETE FROM payments WHERE cus_id = %s",[del_id2,])
+        conn.commit()
+        cursor.execute("SELECT * FROM payments;")
+        print(cursor.fetchall())
+
+    elif(a == 8):
+        break
+
+    else:
+        print("ENTER VAILD NUMBER!!")
+

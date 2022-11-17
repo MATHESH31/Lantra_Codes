@@ -1,0 +1,16 @@
+rows = int(input("Enter number of rows: "))
+columns = int(input("Enter number of columns: "))
+li1 = []
+li2 = []
+li3 = []
+li4 = []
+for i in range(rows):
+    val = input("Enter the values for the row(with ','): ").split(",")
+    li1.append(val)
+print(li1)
+for i in range(len(li1)):
+        li2.append(li1[i][0])
+        li3.append(li1[i][1])
+li4.append(li2)
+li4.append(li3)
+print(li4)

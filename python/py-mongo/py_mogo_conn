@@ -1,0 +1,7 @@
+import pymongo
+
+myclient = pymongo.MongoClient("")
+
+mydb = myclient["sample"]
+
+mycol = mydb["user"]
